@@ -54,6 +54,6 @@ end
       end
   # #11
       @entries.insert(index, Entry.new(name, phone_number, email))
-    end 
+    end
  end
 >>>>>>> ff6d84085f58375fda02402275d65eb2c9f700c2
