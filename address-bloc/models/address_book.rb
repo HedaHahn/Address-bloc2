@@ -1,59 +1,70 @@
-<<<<<<< HEAD
-require_relative 'entry.rb'
-=======
 require_relative 'entry'
->>>>>>> ff6d84085f58375fda02402275d65eb2c9f700c2
+require "csv"
 
 class AddressBook
   attr_accessor :entries
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ff6d84085f58375fda02402275d65eb2c9f700c2
   def initialize
      @entries = []
-   end
+  end
 
-<<<<<<< HEAD
-   def remove_entry(name, phone, email)
+  def remove_entry(name, phone, email)
      delete_entry = nil
      @entries.each do |entry|
-   end
-
-   @entries.delete(delete_entry)
-
- end
-
+  end
+    @entries.delete(delete_entry)
+  end
 
  def add_entry(name, phone_number, email)
-
      index = 0
      @entries.each do |entry|
-
        if name < entry.name
          break
        end
        index += 1
      end
-
      @entries.insert(index, Entry.new(name, phone_number, email))
-   end
+  end
+
+   def import_from_csv(file_name)
+     csv_text = File.read(file_name)
+     csv = CSV.parse(csv_text, headers: true, skip_blanks: true)
+
+     csv.each do |row|
+       row_hash = row.to_hash
+       add_entry(row_hash["name"], row_hash["phone_number"], row_hash["email"])
+  end
 
 end
-=======
-   def add_entry(name, phone_number, email)
-  # #9
-      index = 0
-      @entries.each do |entry|
-  # #10
-        if name < entry.name
-          break
-        end
-        index += 1
+
+  def binary_search(name)
+    lower = 0
+    upper = entries.length - 1
+
+    while lower <= upper
+      mid = (lower + upper) / 2
+      mid_name = entries[mid].name
+      if name == mid_name
+        return entries[mid]
+      elsif name < mid_name
+        upper = mid - 1
+      elsif name > mid_name
+        lower = mid + 1
       end
-  # #11
-      @entries.insert(index, Entry.new(name, phone_number, email))
     end
- end
->>>>>>> ff6d84085f58375fda02402275d65eb2c9f700c2
+    return nil
+  end
+
+    # Create the iterative search method
+  def iterative_search(name)
+    index = 0
+    entries.each do
+        if name == entries[index].name
+          return entries[index]
+        end
+    index += 1
+    end
+    return nil
+  end
+
+end
